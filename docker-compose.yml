@@ -1,0 +1,6 @@
+version: '2'
+services:
+  swagglp:
+    build: .
+    volumes:
+    - /Users/juliettegonzalez/go-workspace/src/github.com/juliettegonzalez/insapp-go/swagger/user:/tmp
