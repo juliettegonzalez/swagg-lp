@@ -23,6 +23,6 @@ class Parameter
     end
 
     def to_s
-        "#{paramType} #{name} : #{dataType} (#{required})"
+        "(#{paramType}) #{name} : #{dataType} #{required ? '(required)' : ''}"
     end
 end

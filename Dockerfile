@@ -6,4 +6,4 @@ RUN mkdir /var/SwaggLP/
 
 COPY ./ /var/SwaggLP/
 
-ENTRYPOINT ruby /var/SwaggLP/parser.rb
+ENTRYPOINT ruby /var/SwaggLP/generate_endpoints.rb
