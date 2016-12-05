@@ -1,0 +1,13 @@
+consumes:
+- application/json
+definitions: {}
+info:
+  description: Insapp API
+  title: Insapp
+  version: 1.0.0
+paths: {}
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
