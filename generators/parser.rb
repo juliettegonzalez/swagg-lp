@@ -1,19 +1,18 @@
 require 'rubygems'
 require 'json'
-require_relative 'endpoint'
-require_relative 'parameter'
-require_relative 'response'
-require_relative 'model'
-require_relative 'property'
+require_relative '../models/endpoint'
+require_relative '../models/parameter'
+require_relative '../models/response'
+require_relative '../models/model'
+require_relative '../models/property'
 
-# docker-compose up --build
 
 def read_file(path)
   content = ""
   file = File.new(path, "r")
   while (line = file.gets)
       content += "#{line}\n"
-    end
+  end
   file.close
   JSON.parse content
 end
@@ -61,9 +60,3 @@ def parse(path)
   models = get_models json
   return baseURL, endpoints, models
 end
-
-#main
-baseURL, endpoints, models = parse("/tmp/index.json")
-puts baseURL
-puts endpoints
-puts models

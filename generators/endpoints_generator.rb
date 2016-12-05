@@ -3,11 +3,11 @@ require 'json'
 require 'net/http'
 require 'net/https'
 require 'uri'
-require_relative 'endpoint'
-require_relative 'parameter'
-require_relative 'response'
-require_relative 'model'
-require_relative 'property'
+require_relative '../models/endpoint'
+require_relative '../models/parameter'
+require_relative '../models/response'
+require_relative '../models/model'
+require_relative '../models/property'
 
 
 def excecute_request(method, url, parameter, response)
@@ -68,7 +68,7 @@ def launch_requests(baseURL, endpoints)
 end
 
 
-excecute_request('GET', 'https://httpbin.org/get', nil, nil)
-excecute_request('POST', 'https://httpbin.org/post', nil, nil)
-excecute_request('PUT', 'https://httpbin.org/put', nil, nil)
-excecute_request('DELETE', 'https://httpbin.org/delete', nil, nil)
+# excecute_request('GET', 'https://httpbin.org/get', nil, nil)
+# excecute_request('POST', 'https://httpbin.org/post', nil, nil)
+# excecute_request('PUT', 'https://httpbin.org/put', nil, nil)
+# excecute_request('DELETE', 'https://httpbin.org/delete', nil, nil)
