@@ -9,6 +9,28 @@ require_relative '../models/response'
 require_relative '../models/model'
 require_relative '../models/property'
 
+def generateRequest(method, url, parameters)
+
+  uri = URI.parse(url)
+  parameter = { :id => 342342 }
+
+  http = Net::HTTP.new(uri.host, uri.port)
+  # http.use_ssl = true
+  # http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+  request = nil
+  if method == 'GET'
+      request = Net::HTTP::Get.new(uri, 'Content-Type' => 'application/json')
+  elsif method == 'POST'
+    request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+  elsif method == 'PUT'
+    request = Net::HTTP::Put.new(uri.path, 'Content-Type' => 'application/json')
+  elsif method == 'DELETE'
+    request = Net::HTTP::Delete.new(uri.path, 'Content-Type' => 'application/json')
+  end
+  request.body = parameters if parameters
+  return http, request
+end
 
 def excecute_request(method, url, parameter, response)
   # Full address

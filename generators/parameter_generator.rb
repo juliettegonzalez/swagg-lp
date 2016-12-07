@@ -40,7 +40,7 @@ end
 
 def generateOtherType(types)
     type = TYPES - types
-    type = type[Random.rand(0...type.length)]
+    type = type[Random.rand(0...type.length-1)]
     return generateType(type)
 end
 
