@@ -1,9 +1,10 @@
 class Parameter
-    def initialize(name, paramType, dataType, required)
+    def initialize(name, paramType, dataType, required, description)
         @name = name
         @paramType = paramType
         @dataType = dataType
         @required = required
+        @description = description
     end
 
     def name
@@ -20,6 +21,10 @@ class Parameter
 
     def required
         @required
+    end
+
+    def description
+        @description
     end
 
     def to_s

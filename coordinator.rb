@@ -16,6 +16,7 @@ require_relative 'generators/parameter_generator'
 
 
 baseURL, endpoints, models = parse('/tmp/user/index.json')
+out_file = File.new("output.txt", "w")
 
 endpoint = endpoints.first
 
@@ -23,7 +24,7 @@ url = generateURL(endpoint)
 params = []
 endpoint.params.each do |param|
     if param.paramType == "body" then
-        params << generateModel(models[dataType])
+        params << generateModel(models[param.dataType])
     end
 end
 
@@ -41,7 +42,12 @@ else
         http, request = generateRequest(endpoint.method, url, paramsToSend)
         res = http.request(request)
         puts res.body
+
+        output = generateOutput(endpoint.method, url, paramsToSend, res)
+        out_file.puts(output)
+
     end
 end
 
+out_file.close
 puts "finished"

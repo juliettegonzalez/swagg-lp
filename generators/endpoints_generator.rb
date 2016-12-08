@@ -73,7 +73,7 @@ def excecute_request(method, url, parameter, response)
   end
 
   res = http.request(request)
-  puts res.body
+  puts res.code
 end
 
 

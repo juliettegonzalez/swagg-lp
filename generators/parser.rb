@@ -25,7 +25,7 @@ def get_endpoints(json)
       params = []
       responses = []
       operation['parameters'].each do |parameter|
-        params << Parameter.new(parameter['name'], parameter['paramType'], parameter['dataType'], parameter['required'])
+        params << Parameter.new(parameter['name'], parameter['paramType'], parameter['dataType'], parameter['required'], parameter['description'])
       end
       operation['responseMessages'].each do |response|
         responses << Response.new(response['code'], response['responseType'], response['responseModel'])
@@ -52,7 +52,7 @@ def get_models(json)
 end
 
 
-#Global file
+# Main
 def parse(path)
   json = read_file path
   baseURL = json['basePath']
