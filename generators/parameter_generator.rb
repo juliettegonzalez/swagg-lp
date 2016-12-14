@@ -76,6 +76,11 @@ def generateModel(model, number: 10)
     return res
 end
 
+def generateFromTag(tag)
+  //TODO
+end
+
+
 def generateURL(endpoint)
     uri = endpoint.uri
     params = uri.split("/").select do |e| /.*{(.*)}.*/.match(e) end
@@ -85,8 +90,12 @@ def generateURL(endpoint)
         endpointParams[param.name] = param.dataType if param.paramType == "path"
     end
     params.each do |param|
+      if param.hasParamTag
+        value = generateFromTag(param.getParamTag)
+      else
         value = generateOtherType([endpointParams[param], 'nil', 'bool', 'array']).to_s
-        uri.gsub!("\{#{param}\}", value)
+      end
+      uri.gsub!("\{#{param}\}", value)
     end
     uri
 end

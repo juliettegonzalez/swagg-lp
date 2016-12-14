@@ -24,7 +24,11 @@ url = generateURL(endpoint)
 params = []
 endpoint.params.each do |param|
     if param.paramType == "body" then
+      if param.hasParamTag then
+        params << generateFromTag(param.getParamTag)
+      else
         params << generateModel(models[param.dataType])
+      end
     end
 end
 

@@ -32,6 +32,8 @@ def generateRequest(method, url, parameters)
   return http, request
 end
 
+
+# Not used anymore
 def excecute_request(method, url, parameter, response)
   # Full address
   uri = URI.parse(url)   #NB : faut il parser l'URI pour les {id}, etc ?

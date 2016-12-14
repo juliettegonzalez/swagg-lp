@@ -27,6 +27,15 @@ class Parameter
         @description
     end
 
+    def hasParamTag()
+      return @description != nil ? (@description.include? "#") : false
+    end
+
+    #NB: we consider that there can be only one tag
+    def getParamTag()
+      return @description.split('#')[1]
+    end
+
     def to_s
         "(#{paramType}) #{name} : #{dataType} #{required ? '(required)' : ''}"
     end
