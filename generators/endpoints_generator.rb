@@ -10,10 +10,7 @@ require_relative '../models/model'
 require_relative '../models/property'
 
 def generateRequest(method, url, parameters)
-
   uri = URI.parse(url)
-  parameter = { :id => 342342 }
-
   http = Net::HTTP.new(uri.host, uri.port)
   # http.use_ssl = true
   # http.verify_mode = OpenSSL::SSL::VERIFY_PEER

@@ -27,13 +27,14 @@ class Parameter
         @description
     end
 
-    def hasParamTag()
-      return @description != nil ? (@description.include? "#") : false
+    def hasParamTag
+        return @description != nil ? (@description.include? "#") : false
     end
 
     #NB: we consider that there can be only one tag
-    def getParamTag()
-      return @description.split('#')[1]
+    def paramTag
+        return @description.split('#')[1].split(' ').first if self.hasParamTag
+        return nil
     end
 
     def to_s

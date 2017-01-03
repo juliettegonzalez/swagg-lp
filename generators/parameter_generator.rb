@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'json'
+require 'yaml'
 require 'net/http'
 require 'uri'
 require 'bson'
@@ -77,9 +78,12 @@ def generateModel(model, number: 10)
 end
 
 def generateFromTag(tag)
-  //TODO
+    config = YAML.load_file('/var/SwaggLP/config.yml')
+    return nil if !config["tags"].keys.include?(tag)
+    script = config["tags"][tag]
+    result = `/var/SwaggLP/scripts/#{script}`
+    return result
 end
-
 
 def generateURL(endpoint)
     uri = endpoint.uri
@@ -87,15 +91,16 @@ def generateURL(endpoint)
     params = params.map do |e| /.*{(.*)}.*/.match(e).captures.first end
     endpointParams = {}
     endpoint.params.each do |param|
-        endpointParams[param.name] = param.dataType if param.paramType == "path"
+        endpointParams[param.name] = param if param.paramType == "path"
     end
     params.each do |param|
-      if param.hasParamTag
-        value = generateFromTag(param.getParamTag)
-      else
-        value = generateOtherType([endpointParams[param], 'nil', 'bool', 'array']).to_s
-      end
-      uri.gsub!("\{#{param}\}", value)
+        param = endpointParams[param]
+        if param.paramTag
+            value = generateFromTag(param.paramTag)
+        else
+            value = generateOtherType([param.dataType, 'nil', 'bool', 'array']).to_s
+        end
+      uri.gsub!("\{#{param.name}\}", value)
     end
     uri
 end
