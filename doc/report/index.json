@@ -18,7 +18,7 @@
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "if of the user to report",
+                            "description": "if of the user to report #userid",
                             "dataType": "int",
                             "type": "int",
                             "format": "",
