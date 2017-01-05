@@ -26,6 +26,18 @@
                             "required": true,
                             "minimum": 0,
                             "maximum": 0
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
                         }
                     ],
                     "responseMessages": [
