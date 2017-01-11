@@ -4,6 +4,18 @@
     "basePath": "https://insapp.thomasmorel.io/api/v1",
     "apis": [
         {
+            "path": "/association",
+            "description": "Return JSON of the association linked to the given id in the URL"
+        },
+        {
+            "path": "/post",
+            "description": "Get the post matching the given id"
+        },
+        {
+            "path": "/report",
+            "description": "Report a comment"
+        },
+        {
             "path": "/user",
             "description": "Return the user associated with the given id in the URL"
         },
@@ -12,24 +24,12 @@
             "description": "Return the user(s) matching the entry (username)"
         },
         {
-            "path": "/report",
-            "description": "Report a user. Return empty JSON"
-        },
-        {
-            "path": "/post",
-            "description": "Get the post matching the given id"
-        },
-        {
-            "path": "/association",
-            "description": "Return JSON of the association linked to the given id in the URL"
+            "path": "/notification",
+            "description": "Update notification"
         },
         {
             "path": "/event",
             "description": "Return JSON of the event linked to the association's id in the URL"
-        },
-        {
-            "path": "/notification",
-            "description": "Update notification"
         }
     ],
     "info": {

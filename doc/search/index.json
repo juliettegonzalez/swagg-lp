@@ -20,7 +20,7 @@
                         {
                             "paramType": "path",
                             "name": "username",
-                            "description": "username of the user to look for #userid",
+                            "description": "username of the user to look for",
                             "dataType": "string",
                             "type": "string",
                             "format": "",

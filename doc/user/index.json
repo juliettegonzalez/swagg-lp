@@ -18,7 +18,7 @@
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "#userid",
+                            "description": "id of the user",
                             "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
                             "type": "gopkg.in.mgo.v2.bson.ObjectId",
                             "format": "",
@@ -71,7 +71,7 @@
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "#userid",
+                            "description": "id of the user",
                             "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
                             "type": "gopkg.in.mgo.v2.bson.ObjectId",
                             "format": "",
@@ -136,7 +136,7 @@
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "id of the user to delete #userid",
+                            "description": "id of the user to delete",
                             "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
                             "type": "gopkg.in.mgo.v2.bson.ObjectId",
                             "format": "",
