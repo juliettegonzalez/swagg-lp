@@ -41,7 +41,7 @@ end
 
 def generateOtherType(types)
     type = TYPES - types
-    type = type[Random.rand(0...type.length-1)]
+    type = type[Random.rand(0...type.length)]
     return generateType(type)
 end
 
@@ -52,7 +52,7 @@ def generateType(type)
     return randomFloat if type == 'float'
     return randomString(length: 10) if type == 'string'
     return randomBool if type == 'bool'
-    return randomHex if type == 'gopkg.in.mgo.v2.bson.ObjectId'
+    return randomHex if type == 'gopkg.in.mgo.v2.bson.ObjectId' || type == "hex"
 end
 
 def generateArray(type, length: 10000)
@@ -77,30 +77,46 @@ def generateModel(model, number: 10)
     return res
 end
 
-def generateFromTag(tag)
+def generateFromTag(tag, number: 1)
     config = YAML.load_file('/var/SwaggLP/config.yml')
     return nil if !config["tags"].keys.include?(tag)
     script = config["tags"][tag]
     result = `/var/SwaggLP/scripts/#{script}`
-    return result
+    return result.gsub("\n","")
 end
 
 def generateURL(endpoint)
-    uri = endpoint.uri
+    uri = endpoint.uri.clone
     params = uri.split("/").select do |e| /.*{(.*)}.*/.match(e) end
     params = params.map do |e| /.*{(.*)}.*/.match(e).captures.first end
     endpointParams = {}
+    queryParams = {}
     endpoint.params.each do |param|
         endpointParams[param.name] = param if param.paramType == "path"
+        queryParams[param.name] = param if param.paramType == "query"
     end
-    params.each do |param|
+    endpointParams.keys.each do |param|
         param = endpointParams[param]
         if param.paramTag
             value = generateFromTag(param.paramTag)
         else
-            value = generateOtherType([param.dataType, 'nil', 'bool', 'array']).to_s
+            #value = generateOtherType([param.dataType, 'nil', 'bool', 'array']).to_s
+            value = generateOtherType(['nil', 'bool', 'array']).to_s
         end
       uri.gsub!("\{#{param.name}\}", value)
     end
+
+    queryParams.keys.each do |param|
+        param = queryParams[param]
+        if param.paramTag
+            value = generateFromTag(param.paramTag)
+        else
+            #value = generateOtherType([param.dataType, 'nil', 'bool', 'array']).to_s
+            value = generateOtherType(['nil', 'bool', 'array']).to_s
+        end
+        uri = "#{uri}&#{param.name}=#{value}" if uri.include? "?"
+        uri = "#{uri}?#{param.name}=#{value}" if !uri.include? "?"
+    end
+
     uri
 end

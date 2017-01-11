@@ -1,6 +1,6 @@
 FROM ruby
 
-RUN gem install json bson
+RUN gem install json bson colorize
 RUN mkdir /var/SwaggLP/
 
 COPY ./ /var/SwaggLP/

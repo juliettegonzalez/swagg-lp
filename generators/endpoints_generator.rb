@@ -12,8 +12,8 @@ require_relative '../models/property'
 def generateRequest(method, url, parameters)
   uri = URI.parse(url)
   http = Net::HTTP.new(uri.host, uri.port)
-  # http.use_ssl = true
-  # http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+  http.use_ssl = true
+  http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
   request = nil
   if method == 'GET'
@@ -25,7 +25,7 @@ def generateRequest(method, url, parameters)
   elsif method == 'DELETE'
     request = Net::HTTP::Delete.new(uri.path, 'Content-Type' => 'application/json')
   end
-  request.body = parameters if parameters
+  request.body = parameters.to_json if parameters
   return http, request
 end
 
@@ -34,7 +34,7 @@ end
 def excecute_request(method, url, parameter, response)
   # Full address
   uri = URI.parse(url)   #NB : faut il parser l'URI pour les {id}, etc ?
-  parameter = { :id => 342342 }
+  #parameter = { :id => 342342 }
 
   http = Net::HTTP.new(uri.host, uri.port)
 
