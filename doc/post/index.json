@@ -1,0 +1,457 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://insapp.thomasmorel.io/api/v1",
+    "resourcePath": "/post",
+    "apis": [
+        {
+            "path": "/post/{id}",
+            "description": "Get the post matching the given id",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "GetPostController",
+                    "type": "github.com.juliettegonzalez.insapp-go.src.Post",
+                    "items": {},
+                    "summary": "Get the post matching the given id",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "description": "id of the post",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "object",
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Post"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/post",
+            "description": "Get the N lastest post.",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "GetLastestPostsController",
+                    "type": "array",
+                    "items": {
+                        "$ref": "github.com.juliettegonzalez.insapp-go.src.Post"
+                    },
+                    "summary": "Get the N lastest post.",
+                    "parameters": [
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "array",
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Post"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/post/{id}/like/{userID}",
+            "description": "Return JSON with the post and the user that liked the post",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "LikePostController",
+                    "type": "gopkg.in.mgo.v2.bson.M",
+                    "items": {},
+                    "summary": "Return JSON with the post and the user that liked the post",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "description": "id of the post",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "userID",
+                            "description": "id of the user",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "object",
+                            "responseModel": "gopkg.in.mgo.v2.bson.M"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                },
+                {
+                    "httpMethod": "DELETE",
+                    "nickname": "DislikePostController",
+                    "type": "gopkg.in.mgo.v2.bson.M",
+                    "items": {},
+                    "summary": "Return JSON with the post and the user that disliked the post",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "description": "id of the post",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "userID",
+                            "description": "id of the user",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "object",
+                            "responseModel": "gopkg.in.mgo.v2.bson.M"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/post/{id}/comment",
+            "description": "Return JSON of the post that has been commented",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "CommentPostController",
+                    "type": "github.com.juliettegonzalez.insapp-go.src.Post",
+                    "items": {},
+                    "summary": "Return JSON of the post that has been commented",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "description": "id of the post",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "object",
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Post"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/post/{id}/comment/{commentID}",
+            "description": "Return JSON of the post that has been uncommented",
+            "operations": [
+                {
+                    "httpMethod": "DELETE",
+                    "nickname": "UncommentPostController",
+                    "type": "github.com.juliettegonzalez.insapp-go.src.Post",
+                    "items": {},
+                    "summary": "Return JSON of the post that has been uncommented",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "description": "id of the post",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "commentID",
+                            "description": "id of the comment",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "object",
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Post"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "github.com.juliettegonzalez.insapp-go.src.Comments": {
+            "id": "github.com.juliettegonzalez.insapp-go.src.Comments",
+            "properties": null
+        },
+        "github.com.juliettegonzalez.insapp-go.src.Post": {
+            "id": "github.com.juliettegonzalez.insapp-go.src.Post",
+            "properties": {
+                "ID": {
+                    "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "association": {
+                    "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "comments": {
+                    "type": "github.com.juliettegonzalez.insapp-go.src.Comments",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "date": {
+                    "type": "Time",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "description": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "image": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "imageSize": {
+                    "type": "gopkg.in.mgo.v2.bson.M",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "likes": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "gopkg.in.mgo.v2.bson.ObjectId"
+                    },
+                    "format": ""
+                },
+                "title": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                }
+            }
+        },
+        "gopkg.in.mgo.v2.bson.M": {
+            "id": "gopkg.in.mgo.v2.bson.M",
+            "properties": null
+        },
+        "gopkg.in.mgo.v2.bson.ObjectId": {
+            "id": "gopkg.in.mgo.v2.bson.ObjectId",
+            "properties": null
+        }
+    }
+}

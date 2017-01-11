@@ -1,0 +1,209 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://insapp.thomasmorel.io/api/v1",
+    "resourcePath": "/association",
+    "apis": [
+        {
+            "path": "/association/{id}",
+            "description": "Return JSON of the association linked to the given id in the URL",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "GetAssociationController",
+                    "type": "github.com.juliettegonzalez.insapp-go.src.Association",
+                    "items": {},
+                    "summary": "Return JSON of the association linked to the given id in the URL",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "description": "id of the association",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "object",
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Association"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/association",
+            "description": "Return JSON of all the associations",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "nickname": "GetAllAssociationsController",
+                    "type": "array",
+                    "items": {
+                        "$ref": "github.com.juliettegonzalez.insapp-go.src.Association"
+                    },
+                    "summary": "Return JSON of all the associations",
+                    "parameters": [
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "array",
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Association"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "github.com.juliettegonzalez.insapp-go.src.Association": {
+            "id": "github.com.juliettegonzalez.insapp-go.src.Association",
+            "properties": {
+                "ID": {
+                    "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "bgcolor": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "cover": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "description": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "email": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "events": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "gopkg.in.mgo.v2.bson.ObjectId"
+                    },
+                    "format": ""
+                },
+                "fgcolor": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "name": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "palette": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "github.com.juliettegonzalez.insapp-go.src.Ints"
+                    },
+                    "format": ""
+                },
+                "posts": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "gopkg.in.mgo.v2.bson.ObjectId"
+                    },
+                    "format": ""
+                },
+                "profile": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "selectedcolor": {
+                    "type": "int",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                }
+            }
+        },
+        "github.com.juliettegonzalez.insapp-go.src.Ints": {
+            "id": "github.com.juliettegonzalez.insapp-go.src.Ints",
+            "properties": null
+        },
+        "gopkg.in.mgo.v2.bson.ObjectId": {
+            "id": "gopkg.in.mgo.v2.bson.ObjectId",
+            "properties": null
+        }
+    }
+}
