@@ -2,22 +2,69 @@
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
     "basePath": "https://insapp.thomasmorel.io/api/v1",
-    "resourcePath": "/user",
+    "resourcePath": "/notification",
     "apis": [
         {
-            "path": "/user/{id}",
-            "description": "Return the user associated with the given id in the URL",
+            "path": "/notification",
+            "description": "Update notification",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "UpdateNotificationUserController",
+                    "type": "gopkg.in.mgo.v2.bson.M",
+                    "items": {},
+                    "summary": "Update notification",
+                    "parameters": [
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "object",
+                            "responseModel": "gopkg.in.mgo.v2.bson.M"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden access",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/notification/{userID}",
+            "description": "Return the notifiaction for the user id",
             "operations": [
                 {
                     "httpMethod": "GET",
-                    "nickname": "GetUserController",
-                    "type": "github.com.juliettegonzalez.insapp-go.src.User",
+                    "nickname": "GetNotificationController",
+                    "type": "gopkg.in.mgo.v2.bson.M",
                     "items": {},
-                    "summary": "Return the user associated with the given id in the URL",
+                    "summary": "Return the notifiaction for the user id",
                     "parameters": [
                         {
                             "paramType": "path",
-                            "name": "id",
+                            "name": "userID",
                             "description": "id of the user",
                             "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
                             "type": "gopkg.in.mgo.v2.bson.ObjectId",
@@ -45,7 +92,7 @@
                             "code": 200,
                             "message": "",
                             "responseType": "object",
-                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.User"
+                            "responseModel": "gopkg.in.mgo.v2.bson.M"
                         },
                         {
                             "code": 403,
@@ -60,83 +107,36 @@
                             "responseModel": "error"
                         }
                     ]
-                },
-                {
-                    "httpMethod": "PUT",
-                    "nickname": "UpdateUserController",
-                    "type": "github.com.juliettegonzalez.insapp-go.src.User",
-                    "items": {},
-                    "summary": "Update the user from the JSON body and return the modified user",
-                    "parameters": [
-                        {
-                            "paramType": "path",
-                            "name": "id",
-                            "description": "id of the user",
-                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
-                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
-                            "format": "",
-                            "allowMultiple": false,
-                            "required": true,
-                            "minimum": 0,
-                            "maximum": 0
-                        },
-                        {
-                            "paramType": "query",
-                            "name": "token",
-                            "description": "#insapptoken",
-                            "dataType": "string",
-                            "type": "string",
-                            "format": "",
-                            "allowMultiple": false,
-                            "required": true,
-                            "minimum": 0,
-                            "maximum": 0
-                        },
-                        {
-                            "paramType": "body",
-                            "name": "user",
-                            "description": "Modification to give to the user",
-                            "dataType": "github.com.juliettegonzalez.insapp-go.src.User",
-                            "type": "github.com.juliettegonzalez.insapp-go.src.User",
-                            "format": "",
-                            "allowMultiple": false,
-                            "required": true,
-                            "minimum": 0,
-                            "maximum": 0
-                        }
-                    ],
-                    "responseMessages": [
-                        {
-                            "code": 200,
-                            "message": "",
-                            "responseType": "object",
-                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.User"
-                        },
-                        {
-                            "code": 403,
-                            "message": "Forbidden access",
-                            "responseType": "object",
-                            "responseModel": "error"
-                        },
-                        {
-                            "code": 406,
-                            "message": "Request not accepted",
-                            "responseType": "object",
-                            "responseModel": "error"
-                        }
-                    ]
-                },
+                }
+            ]
+        },
+        {
+            "path": "/notification/{userID}/{id}",
+            "description": "Delete a notification",
+            "operations": [
                 {
                     "httpMethod": "DELETE",
-                    "nickname": "DeleteUserController",
-                    "type": "github.com.juliettegonzalez.insapp-go.src.User",
+                    "nickname": "DeleteNotificationController",
+                    "type": "gopkg.in.mgo.v2.bson.M",
                     "items": {},
-                    "summary": "Delete the given user and answer an empty user if success",
+                    "summary": "Delete a notification",
                     "parameters": [
                         {
                             "paramType": "path",
+                            "name": "userID",
+                            "description": "id of the user",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "path",
                             "name": "id",
-                            "description": "id of the user to delete",
+                            "description": "id of the notification",
                             "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
                             "type": "gopkg.in.mgo.v2.bson.ObjectId",
                             "format": "",
@@ -161,9 +161,9 @@
                     "responseMessages": [
                         {
                             "code": 200,
-                            "message": "Return empty User when success",
+                            "message": "",
                             "responseType": "object",
-                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.User"
+                            "responseModel": "gopkg.in.mgo.v2.bson.M"
                         },
                         {
                             "code": 403,
@@ -183,74 +183,9 @@
         }
     ],
     "models": {
-        "github.com.juliettegonzalez.insapp-go.src.User": {
-            "id": "github.com.juliettegonzalez.insapp-go.src.User",
-            "properties": {
-                "ID": {
-                    "type": "gopkg.in.mgo.v2.bson.ObjectId",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                },
-                "description": {
-                    "type": "string",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                },
-                "email": {
-                    "type": "string",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                },
-                "emailpublic": {
-                    "type": "bool",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                },
-                "events": {
-                    "type": "array",
-                    "description": "",
-                    "items": {
-                        "$ref": "gopkg.in.mgo.v2.bson.ObjectId"
-                    },
-                    "format": ""
-                },
-                "gender": {
-                    "type": "string",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                },
-                "name": {
-                    "type": "string",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                },
-                "postsliked": {
-                    "type": "array",
-                    "description": "",
-                    "items": {
-                        "$ref": "gopkg.in.mgo.v2.bson.ObjectId"
-                    },
-                    "format": ""
-                },
-                "promotion": {
-                    "type": "string",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                },
-                "username": {
-                    "type": "string",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                }
-            }
+        "gopkg.in.mgo.v2.bson.M": {
+            "id": "gopkg.in.mgo.v2.bson.M",
+            "properties": null
         },
         "gopkg.in.mgo.v2.bson.ObjectId": {
             "id": "gopkg.in.mgo.v2.bson.ObjectId",

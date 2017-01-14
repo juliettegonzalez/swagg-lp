@@ -18,18 +18,6 @@
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "if of the user to report userid",
-                            "dataType": "int",
-                            "type": "int",
-                            "format": "",
-                            "allowMultiple": false,
-                            "required": true,
-                            "minimum": 0,
-                            "maximum": 0
-                        },
-                        {
-                            "paramType": "path",
-                            "name": "postID",
                             "description": "id of the post",
                             "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
                             "type": "gopkg.in.mgo.v2.bson.ObjectId",
@@ -101,9 +89,9 @@
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "if of the user to report userid",
-                            "dataType": "int",
-                            "type": "int",
+                            "description": "id of the user to report",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
                             "format": "",
                             "allowMultiple": false,
                             "required": true,

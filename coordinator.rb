@@ -36,15 +36,23 @@ def treatEndpoint(endpoint, baseURL, models)
 
     if limit == 0 then
         http, request = generateRequest(endpoint.method, baseURL + url, nil)
-        res = http.request(request)
-        result << Output.new(endpoint.method, url, [], res)
+        begin
+            res = http.request(request)
+            result << Output.new(endpoint.method, url, [], res)
+        rescue
+            puts "timeout !!"
+        end
     else
         for i in 0...limit do
             paramsToSend = params
             #paramsToSend = params.map { |e| e[i] } if params.length > 0
             http, request = generateRequest(endpoint.method, baseURL + url, paramsToSend)
-            res = http.request(request)
-            result << Output.new(endpoint.method, url, paramsToSend, res)
+            begin
+                res = http.request(request)
+                result << Output.new(endpoint.method, url, paramsToSend, res)
+            rescue
+                puts "timeout !!"
+            end
         end
     end
     return result
@@ -52,15 +60,15 @@ end
 
 results = []
 puts "Running Fuzzy Test"
-for file in ['/tmp/user/index.json'] do#, '/tmp/association/index.json', '/tmp/event/index.json', '/tmp/post/index.json', '/tmp/report/index.json', '/tmp/search/index.json'] do
+for file in ['/tmp/user/index.json'] do #, '/tmp/association/index.json', '/tmp/event/index.json', '/tmp/post/index.json', '/tmp/report/index.json', '/tmp/search/index.json', '/tmp/notification/index.json'] do
     baseURL, endpoints, models = parse(file)
     progress = 0
     total = endpoints.length * 10
     endpoints.each { |endpoint|
-        (0..10).each { |e|
+        (1..10).each { |e|
             results += treatEndpoint(endpoint, baseURL, models)
             progress += 1
-            puts "#{(progress.to_f/total.to_f)*100}"
+            puts "#{((progress.to_f/total.to_f)*100).to_i} %"
         }
     }
 end
