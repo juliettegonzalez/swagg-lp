@@ -1,6 +1,6 @@
 FROM ruby
 
-RUN gem install json bson colorize
+RUN gem install json bson colorize slim tilt
 RUN mkdir /var/SwaggLP/
 
 COPY ./ /var/SwaggLP/

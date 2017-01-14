@@ -2,25 +2,25 @@
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
     "basePath": "https://insapp.thomasmorel.io/api/v1",
-    "resourcePath": "/user",
+    "resourcePath": "/event",
     "apis": [
         {
-            "path": "/user/{id}",
-            "description": "Return the user associated with the given id in the URL",
+            "path": "/event/{id}",
+            "description": "Return JSON of the event linked to the association's id in the URL",
             "operations": [
                 {
                     "httpMethod": "GET",
-                    "nickname": "GetUserController",
-                    "type": "github.com.juliettegonzalez.insapp-go.src.User",
+                    "nickname": "GetEventController",
+                    "type": "github.com.juliettegonzalez.insapp-go.src.Event",
                     "items": {},
-                    "summary": "Return the user associated with the given id in the URL",
+                    "summary": "Return JSON of the event linked to the association's id in the URL",
                     "parameters": [
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "userid",
-                            "dataType": "int",
-                            "type": "int",
+                            "description": "id of the association",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
                             "format": "",
                             "allowMultiple": false,
                             "required": true,
@@ -45,11 +45,11 @@
                             "code": 200,
                             "message": "",
                             "responseType": "object",
-                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.User"
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Event"
                         },
                         {
                             "code": 403,
-                            "message": "Forbidden access",
+                            "message": "Access forbidden",
                             "responseType": "object",
                             "responseModel": "error"
                         },
@@ -60,20 +60,87 @@
                             "responseModel": "error"
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "path": "/event",
+            "description": "Return JSON of all future events from \"NOW\"",
+            "operations": [
                 {
-                    "httpMethod": "PUT",
-                    "nickname": "UpdateUserController",
-                    "type": "github.com.juliettegonzalez.insapp-go.src.User",
+                    "httpMethod": "GET",
+                    "nickname": "GetFutureEventsController",
+                    "type": "array",
+                    "items": {
+                        "$ref": "github.com.juliettegonzalez.insapp-go.src.Event"
+                    },
+                    "summary": "Return JSON of all future events from \"NOW\"",
+                    "parameters": [
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "array",
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Event"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/event/{id}/participant/{userID}",
+            "description": "Add the participant userID to this event id",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "nickname": "AddParticipantController",
+                    "type": "gopkg.in.mgo.v2.bson.M",
                     "items": {},
-                    "summary": "Update the user from the JSON body and return the modified user",
+                    "summary": "Add the participant userID to this event id",
                     "parameters": [
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "userid",
-                            "dataType": "int",
-                            "type": "int",
+                            "description": "id of the event",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "userID",
+                            "description": "id of the user",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
                             "format": "",
                             "allowMultiple": false,
                             "required": true,
@@ -91,18 +158,6 @@
                             "required": true,
                             "minimum": 0,
                             "maximum": 0
-                        },
-                        {
-                            "paramType": "body",
-                            "name": "user",
-                            "description": "Modification to give to the user",
-                            "dataType": "github.com.juliettegonzalez.insapp-go.src.User",
-                            "type": "github.com.juliettegonzalez.insapp-go.src.User",
-                            "format": "",
-                            "allowMultiple": false,
-                            "required": true,
-                            "minimum": 0,
-                            "maximum": 0
                         }
                     ],
                     "responseMessages": [
@@ -110,11 +165,11 @@
                             "code": 200,
                             "message": "",
                             "responseType": "object",
-                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.User"
+                            "responseModel": "gopkg.in.mgo.v2.bson.M"
                         },
                         {
                             "code": 403,
-                            "message": "Forbidden access",
+                            "message": "Access forbidden",
                             "responseType": "object",
                             "responseModel": "error"
                         },
@@ -128,17 +183,29 @@
                 },
                 {
                     "httpMethod": "DELETE",
-                    "nickname": "DeleteUserController",
-                    "type": "github.com.juliettegonzalez.insapp-go.src.User",
+                    "nickname": "RemoveParticipantController",
+                    "type": "gopkg.in.mgo.v2.bson.M",
                     "items": {},
-                    "summary": "Delete the given user and answer an empty user if success",
+                    "summary": "Remove the participant userID to this event id",
                     "parameters": [
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "id of the user to delete userid",
-                            "dataType": "int",
-                            "type": "int",
+                            "description": "id of the event",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "userID",
+                            "description": "id of the user",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
                             "format": "",
                             "allowMultiple": false,
                             "required": true,
@@ -161,13 +228,13 @@
                     "responseMessages": [
                         {
                             "code": 200,
-                            "message": "Return empty User when success",
+                            "message": "",
                             "responseType": "object",
-                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.User"
+                            "responseModel": "gopkg.in.mgo.v2.bson.M"
                         },
                         {
                             "code": 403,
-                            "message": "Forbidden access",
+                            "message": "Access forbidden",
                             "responseType": "object",
                             "responseModel": "error"
                         },
@@ -183,11 +250,35 @@
         }
     ],
     "models": {
-        "github.com.juliettegonzalez.insapp-go.src.User": {
-            "id": "github.com.juliettegonzalez.insapp-go.src.User",
+        "github.com.juliettegonzalez.insapp-go.src.Event": {
+            "id": "github.com.juliettegonzalez.insapp-go.src.Event",
             "properties": {
                 "ID": {
                     "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "association": {
+                    "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "bgColor": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "dateEnd": {
+                    "type": "Time",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "dateStart": {
+                    "type": "Time",
                     "description": "",
                     "items": {},
                     "format": ""
@@ -198,27 +289,13 @@
                     "items": {},
                     "format": ""
                 },
-                "email": {
+                "fgColor": {
                     "type": "string",
                     "description": "",
                     "items": {},
                     "format": ""
                 },
-                "emailpublic": {
-                    "type": "bool",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                },
-                "events": {
-                    "type": "array",
-                    "description": "",
-                    "items": {
-                        "$ref": "gopkg.in.mgo.v2.bson.ObjectId"
-                    },
-                    "format": ""
-                },
-                "gender": {
+                "image": {
                     "type": "string",
                     "description": "",
                     "items": {},
@@ -230,7 +307,15 @@
                     "items": {},
                     "format": ""
                 },
-                "postsliked": {
+                "palette": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "github.com.juliettegonzalez.insapp-go.src.Ints"
+                    },
+                    "format": ""
+                },
+                "participants": {
                     "type": "array",
                     "description": "",
                     "items": {
@@ -238,19 +323,27 @@
                     },
                     "format": ""
                 },
-                "promotion": {
-                    "type": "string",
+                "selectedcolor": {
+                    "type": "int",
                     "description": "",
                     "items": {},
                     "format": ""
                 },
-                "username": {
+                "status": {
                     "type": "string",
                     "description": "",
                     "items": {},
                     "format": ""
                 }
             }
+        },
+        "github.com.juliettegonzalez.insapp-go.src.Ints": {
+            "id": "github.com.juliettegonzalez.insapp-go.src.Ints",
+            "properties": null
+        },
+        "gopkg.in.mgo.v2.bson.M": {
+            "id": "gopkg.in.mgo.v2.bson.M",
+            "properties": null
         },
         "gopkg.in.mgo.v2.bson.ObjectId": {
             "id": "gopkg.in.mgo.v2.bson.ObjectId",

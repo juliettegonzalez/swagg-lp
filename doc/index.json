@@ -1,0 +1,39 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://insapp.thomasmorel.io/api/v1",
+    "apis": [
+        {
+            "path": "/post",
+            "description": "Get the post matching the given id"
+        },
+        {
+            "path": "/report",
+            "description": "Report a comment"
+        },
+        {
+            "path": "/association",
+            "description": "Return JSON of the association linked to the given id in the URL"
+        },
+        {
+            "path": "/user",
+            "description": "Return the user associated with the given id in the URL"
+        },
+        {
+            "path": "/search",
+            "description": "Return the user(s) matching the entry (username)"
+        },
+        {
+            "path": "/event",
+            "description": "Return JSON of the event linked to the association's id in the URL"
+        }
+    ],
+    "info": {
+        "title": "Insapp API",
+        "description": "Backend server for Insapp.",
+        "contact": "api@contact.me",
+        "termsOfServiceUrl": "http://google.com/",
+        "license": "BSD",
+        "licenseUrl": "http://opensource.org/licenses/BSD-2-Clause"
+    }
+}

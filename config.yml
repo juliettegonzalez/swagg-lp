@@ -1,3 +1,5 @@
+logserver:
+    port: 8123
 tags:
-    "usertoken": "usertoken.rb"
-    "userid": "userid.rb"
+    "insapptoken": "usertoken.rb"
+    #"userid": "userid.rb"

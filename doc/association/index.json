@@ -2,25 +2,25 @@
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
     "basePath": "https://insapp.thomasmorel.io/api/v1",
-    "resourcePath": "/user",
+    "resourcePath": "/association",
     "apis": [
         {
-            "path": "/user/{id}",
-            "description": "Return the user associated with the given id in the URL",
+            "path": "/association/{id}",
+            "description": "Return JSON of the association linked to the given id in the URL",
             "operations": [
                 {
                     "httpMethod": "GET",
-                    "nickname": "GetUserController",
-                    "type": "github.com.juliettegonzalez.insapp-go.src.User",
+                    "nickname": "GetAssociationController",
+                    "type": "github.com.juliettegonzalez.insapp-go.src.Association",
                     "items": {},
-                    "summary": "Return the user associated with the given id in the URL",
+                    "summary": "Return JSON of the association linked to the given id in the URL",
                     "parameters": [
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "userid",
-                            "dataType": "int",
-                            "type": "int",
+                            "description": "id of the association",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
                             "format": "",
                             "allowMultiple": false,
                             "required": true,
@@ -45,11 +45,11 @@
                             "code": 200,
                             "message": "",
                             "responseType": "object",
-                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.User"
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Association"
                         },
                         {
                             "code": 403,
-                            "message": "Forbidden access",
+                            "message": "Access forbidden",
                             "responseType": "object",
                             "responseModel": "error"
                         },
@@ -60,44 +60,28 @@
                             "responseModel": "error"
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "path": "/association",
+            "description": "Return JSON of all the associations",
+            "operations": [
                 {
-                    "httpMethod": "PUT",
-                    "nickname": "UpdateUserController",
-                    "type": "github.com.juliettegonzalez.insapp-go.src.User",
-                    "items": {},
-                    "summary": "Update the user from the JSON body and return the modified user",
+                    "httpMethod": "GET",
+                    "nickname": "GetAllAssociationsController",
+                    "type": "array",
+                    "items": {
+                        "$ref": "github.com.juliettegonzalez.insapp-go.src.Association"
+                    },
+                    "summary": "Return JSON of all the associations",
                     "parameters": [
-                        {
-                            "paramType": "path",
-                            "name": "id",
-                            "description": "userid",
-                            "dataType": "int",
-                            "type": "int",
-                            "format": "",
-                            "allowMultiple": false,
-                            "required": true,
-                            "minimum": 0,
-                            "maximum": 0
-                        },
                         {
                             "paramType": "query",
                             "name": "token",
                             "description": "#insapptoken",
                             "dataType": "string",
                             "type": "string",
-                            "format": "",
-                            "allowMultiple": false,
-                            "required": true,
-                            "minimum": 0,
-                            "maximum": 0
-                        },
-                        {
-                            "paramType": "body",
-                            "name": "user",
-                            "description": "Modification to give to the user",
-                            "dataType": "github.com.juliettegonzalez.insapp-go.src.User",
-                            "type": "github.com.juliettegonzalez.insapp-go.src.User",
                             "format": "",
                             "allowMultiple": false,
                             "required": true,
@@ -109,65 +93,12 @@
                         {
                             "code": 200,
                             "message": "",
-                            "responseType": "object",
-                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.User"
+                            "responseType": "array",
+                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.Association"
                         },
                         {
                             "code": 403,
-                            "message": "Forbidden access",
-                            "responseType": "object",
-                            "responseModel": "error"
-                        },
-                        {
-                            "code": 406,
-                            "message": "Request not accepted",
-                            "responseType": "object",
-                            "responseModel": "error"
-                        }
-                    ]
-                },
-                {
-                    "httpMethod": "DELETE",
-                    "nickname": "DeleteUserController",
-                    "type": "github.com.juliettegonzalez.insapp-go.src.User",
-                    "items": {},
-                    "summary": "Delete the given user and answer an empty user if success",
-                    "parameters": [
-                        {
-                            "paramType": "path",
-                            "name": "id",
-                            "description": "id of the user to delete userid",
-                            "dataType": "int",
-                            "type": "int",
-                            "format": "",
-                            "allowMultiple": false,
-                            "required": true,
-                            "minimum": 0,
-                            "maximum": 0
-                        },
-                        {
-                            "paramType": "query",
-                            "name": "token",
-                            "description": "#insapptoken",
-                            "dataType": "string",
-                            "type": "string",
-                            "format": "",
-                            "allowMultiple": false,
-                            "required": true,
-                            "minimum": 0,
-                            "maximum": 0
-                        }
-                    ],
-                    "responseMessages": [
-                        {
-                            "code": 200,
-                            "message": "Return empty User when success",
-                            "responseType": "object",
-                            "responseModel": "github.com.juliettegonzalez.insapp-go.src.User"
-                        },
-                        {
-                            "code": 403,
-                            "message": "Forbidden access",
+                            "message": "Access forbidden",
                             "responseType": "object",
                             "responseModel": "error"
                         },
@@ -183,11 +114,23 @@
         }
     ],
     "models": {
-        "github.com.juliettegonzalez.insapp-go.src.User": {
-            "id": "github.com.juliettegonzalez.insapp-go.src.User",
+        "github.com.juliettegonzalez.insapp-go.src.Association": {
+            "id": "github.com.juliettegonzalez.insapp-go.src.Association",
             "properties": {
                 "ID": {
                     "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "bgcolor": {
+                    "type": "string",
+                    "description": "",
+                    "items": {},
+                    "format": ""
+                },
+                "cover": {
+                    "type": "string",
                     "description": "",
                     "items": {},
                     "format": ""
@@ -204,12 +147,6 @@
                     "items": {},
                     "format": ""
                 },
-                "emailpublic": {
-                    "type": "bool",
-                    "description": "",
-                    "items": {},
-                    "format": ""
-                },
                 "events": {
                     "type": "array",
                     "description": "",
@@ -218,7 +155,7 @@
                     },
                     "format": ""
                 },
-                "gender": {
+                "fgcolor": {
                     "type": "string",
                     "description": "",
                     "items": {},
@@ -230,7 +167,15 @@
                     "items": {},
                     "format": ""
                 },
-                "postsliked": {
+                "palette": {
+                    "type": "array",
+                    "description": "",
+                    "items": {
+                        "$ref": "github.com.juliettegonzalez.insapp-go.src.Ints"
+                    },
+                    "format": ""
+                },
+                "posts": {
                     "type": "array",
                     "description": "",
                     "items": {
@@ -238,19 +183,23 @@
                     },
                     "format": ""
                 },
-                "promotion": {
+                "profile": {
                     "type": "string",
                     "description": "",
                     "items": {},
                     "format": ""
                 },
-                "username": {
-                    "type": "string",
+                "selectedcolor": {
+                    "type": "int",
                     "description": "",
                     "items": {},
                     "format": ""
                 }
             }
+        },
+        "github.com.juliettegonzalez.insapp-go.src.Ints": {
+            "id": "github.com.juliettegonzalez.insapp-go.src.Ints",
+            "properties": null
         },
         "gopkg.in.mgo.v2.bson.ObjectId": {
             "id": "gopkg.in.mgo.v2.bson.ObjectId",

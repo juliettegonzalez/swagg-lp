@@ -1,7 +1,13 @@
 version: '2'
 services:
-  swagglp:
-    build: .
-    volumes:
-    - ./doc:/tmp
-    - ./output:/output
+    swagglp:
+        build: .
+        volumes:
+            - ./doc:/tmp
+            - ./output:/output
+    swagg-nginx:
+        image: nginx
+        ports:
+            - 8123:80
+        volumes:
+            - ./output:/usr/share/nginx/html/

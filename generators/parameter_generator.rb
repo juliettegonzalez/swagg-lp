@@ -103,7 +103,7 @@ def generateURL(endpoint)
             #value = generateOtherType([param.dataType, 'nil', 'bool', 'array']).to_s
             value = generateOtherType(['nil', 'bool', 'array']).to_s
         end
-      uri.gsub!("\{#{param.name}\}", value)
+        uri.gsub!("\{#{param.name}\}", value)
     end
 
     queryParams.keys.each do |param|

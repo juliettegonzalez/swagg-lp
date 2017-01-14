@@ -5,6 +5,89 @@
     "resourcePath": "/report",
     "apis": [
         {
+            "path": "/report/{id}/comment/{commentID}",
+            "description": "Report a comment",
+            "operations": [
+                {
+                    "httpMethod": "PUT",
+                    "nickname": "ReportCommentController",
+                    "type": "gopkg.in.mgo.v2.bson.M",
+                    "items": {},
+                    "summary": "Report a comment",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "description": "if of the user to report userid",
+                            "dataType": "int",
+                            "type": "int",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "postID",
+                            "description": "id of the post",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "path",
+                            "name": "commentID",
+                            "description": "id of the comment",
+                            "dataType": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "type": "gopkg.in.mgo.v2.bson.ObjectId",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "",
+                            "responseType": "object",
+                            "responseModel": "gopkg.in.mgo.v2.bson.M"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Access forbidden",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Request not accepted",
+                            "responseType": "object",
+                            "responseModel": "error"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "path": "/report/user/{id}",
             "description": "Report a user. Return empty JSON",
             "operations": [
@@ -18,9 +101,21 @@
                         {
                             "paramType": "path",
                             "name": "id",
-                            "description": "if of the user to report",
+                            "description": "if of the user to report userid",
                             "dataType": "int",
                             "type": "int",
+                            "format": "",
+                            "allowMultiple": false,
+                            "required": true,
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "token",
+                            "description": "#insapptoken",
+                            "dataType": "string",
+                            "type": "string",
                             "format": "",
                             "allowMultiple": false,
                             "required": true,
@@ -55,6 +150,10 @@
     "models": {
         "gopkg.in.mgo.v2.bson.M": {
             "id": "gopkg.in.mgo.v2.bson.M",
+            "properties": null
+        },
+        "gopkg.in.mgo.v2.bson.ObjectId": {
+            "id": "gopkg.in.mgo.v2.bson.ObjectId",
             "properties": null
         }
     }
