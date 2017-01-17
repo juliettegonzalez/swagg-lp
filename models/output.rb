@@ -81,7 +81,7 @@ class Output
         return {
             "result" => self.result,
             "id" => self.id,
-            "parameters" => self.parameters,
+            "parameters" => JSON.pretty_generate(self.parameters),
             "code" => self.response.code,
             "message" => self.response.message,
             "uri" => self.uri,

@@ -6,7 +6,21 @@ html
       alert('Slim supports embedded javascript!')
 
   body
+    #head-title
     h1 Markup #{result}
 
+    #message-valid-separator
+
+    #message
+    h2 #{code} : #{message}
+
+    #endpoint
+    h3 In method : #{method} #{uri}
+
+    #endpoint-separator
+
+    #parameters
+    h3 Sent paramters :
+       | #{parameters}
+
     #content
-      p This example shows you what a basic Slim file looks like.
