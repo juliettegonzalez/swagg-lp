@@ -1,5 +1,16 @@
-logserver:
-    port: 8123
+codes:
+    warning:
+        - 401
+    error:
+        - 200
+        - 500
+    success:
+        - 400
+        - 403
+        - 404
+        - 406
+log_server:
+    url: http://localhost:8123/
 tags:
     "insapptoken": "usertoken.rb"
     #"userid": "userid.rb"

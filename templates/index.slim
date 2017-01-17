@@ -1,0 +1,40 @@
+doctype html
+html
+  head
+    title Slim Examples
+
+  body
+    h1 Markup
+
+    h2 Errors
+
+    table#errors
+     - for result in error
+       tr
+         td.result = result.result
+         td.method = result.method
+         td.url = result.uri
+         td
+           a href="#{url}#{result.id}.html" "details"
+
+    h2 Warning
+
+    table#warning
+     - for result in warning
+       tr
+         td.result = result.result
+         td.method = result.method
+         td.url = result.uri
+         td
+           a href="#{url}#{result.id}.html" "details"
+
+    h2 Success
+
+    table#success
+     - for result in success
+       tr
+         td.result = result.result
+         td.method = result.method
+         td.url = result.uri
+         td
+           a href="#{url}#{result.id}.html" "details"

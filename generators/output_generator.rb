@@ -17,3 +17,13 @@ def generateHTMLPage(output)
     template = Tilt.new('/var/SwaggLP/templates/output.slim')
     return template.render(output, output.to_h)
 end
+
+def generateHTMLIndex(outputs, url)
+    template = Tilt.new('/var/SwaggLP/templates/index.slim')
+    return template.render(outputs, {
+        :error => outputs.select{ |o| o.result.include? "Error"},
+        :warning => outputs.select{ |o| o.result.include? "Warning"},
+        :success => outputs.select{ |o| o.result.include? "Success"},
+        :url => url
+        })
+end

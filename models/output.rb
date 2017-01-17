@@ -14,23 +14,28 @@ require_relative '../models/property'
 class Output
 
     def initialize(method, uri, parameters, response)
-        case response.code
-        when "200"
-            result = "Warning [200]"
-        when "401"
-            result = "Warning [401]"
-        when "406"
-            result = "Ok [406]"
-        when "404"
-            result = "Warning [404]"
-        when "500"
-            result = "Error [500]"
+        config = YAML.load_file('/var/SwaggLP/config.yml')
+        warning = config["codes"]["warning"]
+        error = config["codes"]["error"]
+        success = config["codes"]["success"]
+        result = "Error"
+        if response != :timeout then
+            if error.include? response.code.to_i then
+                result = "Error"
+            elsif warning.include? response.code.to_i then
+                result = "Warning"
+            elsif success.include? response.code.to_i then
+                result = "Success"
+            end
+            result += " [#{response.code}]"
         else
-            result = "Error [#{response.code}]"
+            result = "Error"
+            result += " [TIMEOUT]"
         end
+
         @uri = uri
         @method = method
-        @parameters = parameters
+        @parameters = JSON.pretty_generate(parameters)
         @response = response
         @result = result
         @id = rand(1000000)
@@ -60,8 +65,12 @@ class Output
         @result
     end
 
+    def status
+        @result.split(" ").first.downcase
+    end
+
     def colorized_result
-        if self.result.include? "Ok" then
+        if self.result.include? "Success" then
             return self.result.green
         elsif self.result.include? "Error" then
             return self.result.red
@@ -70,10 +79,10 @@ class Output
         end
     end
 
-    def sum_up
+    def sum_up(folder)
         config = YAML.load_file('/var/SwaggLP/config.yml')
-        port = config["logserver"]["port"]
-        log_file = "http://localhost:#{port}/#{self.id}.html"
+        url = config["log_server"]["url"]
+        log_file = "#{url}/#{folder}/#{self.id}.html"
         return "#{self.colorized_result}\t\t#{"[#{self.method}]".green}\t\t\t#{self.uri}\t\t\t#{"See details \"#{log_file}\"".cyan}"
     end
 
