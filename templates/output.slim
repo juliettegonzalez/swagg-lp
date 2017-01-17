@@ -1,26 +1,122 @@
 doctype html
 html
   head
-    title Slim Examples
-    javascript:
-      alert('Slim supports embedded javascript!')
+    title Output Report
+    css:
+        @font-face {
+            font-family: monaco;
+        }
+
+        body {
+          padding: 0;
+          margin: 0;
+        }
+
+        /* HEAD TITLE */
+        .head-title{
+          padding: 15px;
+          font-size: 42px;
+          color: white;
+          font-family: monaco;
+        }
+
+        .error-title{
+          background-color: #9b252b;
+        }
+
+        .warning-title{
+          background-color: #d19e58;
+        }
+
+        .valid-title{
+          background-color: #418659;
+        }
+
+
+        /* SEPARATOR */
+        .message-error-separator{
+          background-color: #890d09;
+          padding: 3px;
+        }
+
+        .message-warning-separator{
+          background-color: #a5742a;
+          padding: 3px;
+        }
+
+        .message-success-separator{
+          background-color: #005d24;
+          padding: 3px;
+        }
+
+
+        /* DESCRIPTION MESSAGE */
+        .message{
+          padding-left: 30px;
+          padding-top: 25px;
+          padding-bottom: 25px;
+          font-size: 19px;
+          font-family: monaco;
+        }
+
+        .error-message{
+          background-color: #f3b6b3;
+          color: #590508;
+        }
+
+        .warning-message{
+          background-color: #dec79a;
+          color: #453110;
+        }
+
+        .success-message{
+          background-color: #a1bfa2;
+          color: #004114;
+        }
+
+
+        .endpoint{
+          background-color: #333333;
+          padding-left: 30px;
+          padding-top: 15px;
+          padding-bottom: 14px;
+          font-size: 15px;
+          color: white;
+          font-family: monaco;
+        }
+
+
+        .parameters{
+          background-color: #f4edf0;
+          padding-left: 30px;
+          padding-top: 15px;
+          padding-bottom: 14px;
+          font-size: 15px;
+          color: black;
+          font-family: monaco;
+        }
+
+
+        .endpoint-separator{
+          background-color: #beb8ba;
+          padding: 3px;
+        }
+
 
   body
-    #head-title
-    h1 Markup #{result}
+    div class="head-title #{status}-title"
+      p #{result}
 
-    #message-valid-separator
+    div class="message-#{status}-separator"
 
-    #message
-    h2 #{code} : #{message}
+    div class="message #{status}-message"
+      p #{code} : #{message}
 
-    #endpoint
-    h3 In method : #{method} #{uri}
+    div class="endpoint"
+      p In method : #{method} #{uri}
 
-    #endpoint-separator
+    div class="endpoint-separator"
 
-    #parameters
-    h3 Sent paramters :
-       | #{parameters}
-
-    #content
+    div class="parameters"
+      p Sent parameters :
+      code #{parameters}

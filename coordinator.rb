@@ -40,7 +40,7 @@ def treatEndpoint(endpoint, baseURL, models)
             res = http.request(request)
             result << Output.new(endpoint.method, url, [], res)
         rescue
-            puts "timeout !!"
+            result << Output.new(endpoint.method, url, [], :timeout)
         end
     else
         for i in 0...limit do
@@ -51,7 +51,7 @@ def treatEndpoint(endpoint, baseURL, models)
                 res = http.request(request)
                 result << Output.new(endpoint.method, url, paramsToSend, res)
             rescue
-                puts "timeout !!"
+                result << Output.new(endpoint.method, url, [], :timeout)
             end
         end
     end
@@ -61,6 +61,7 @@ end
 results = []
 puts "Running Fuzzy Test"
 for file in ['/tmp/user/index.json'] do #, '/tmp/association/index.json', '/tmp/event/index.json', '/tmp/post/index.json', '/tmp/report/index.json', '/tmp/search/index.json', '/tmp/notification/index.json'] do
+    puts "Testing #{file}..."
     baseURL, endpoints, models = parse(file)
     progress = 0
     total = endpoints.length * 10
@@ -68,15 +69,22 @@ for file in ['/tmp/user/index.json'] do #, '/tmp/association/index.json', '/tmp/
         (1..10).each { |e|
             results += treatEndpoint(endpoint, baseURL, models)
             progress += 1
-            puts "#{((progress.to_f/total.to_f)*100).to_i} %"
+            puts "[Progress] #{((progress.to_f/total.to_f)*100).to_i} %"
         }
     }
 end
 
+folder = Time.new.strftime("%y.%m.%d_%H-%M-%S").to_s
+`mkdir -p ./output/#{folder}`
 for result in results do
-    File.open("./output/#{result.id}.html", 'w') { |file| file.write(generateHTMLPage(result)) }
-    puts result.sum_up
+    File.open("./output/#{folder}/#{result.id}.html", 'w') { |file| file.write(generateHTMLPage(result)) }
+    puts result.sum_up(folder)
 end
 
-File.open("./output/output.json", 'w') { |file| file.write(results.map { |e| e.to_h }.to_json) }
+config = YAML.load_file('/var/SwaggLP/config.yml')
+url = config["log_server"]["url"]
+url = "#{url}/#{folder}/"
+File.open("./output/#{folder}/index.html", 'w') { |file| file.write(generateHTMLIndex(results, url)) }
+
+File.open("./output/#{folder}/output.json", 'w') { |file| file.write(results.map { |e| e.to_h }.to_json) }
 puts "Finished Fuzzy Test"
