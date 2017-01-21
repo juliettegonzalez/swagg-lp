@@ -1,25 +1,99 @@
 doctype html
 html
   head
-    title Slim Examples
+    title Index
+    css:
+        @font-face {
+            font-family: monaco;
+        }
+
+        body {
+          margin: 0;
+          background-color: #fcfafb;
+          font-family: monaco;
+        }
+
+        .head-title{
+          background-color: #2f2f2f;
+          padding: 10px;
+          margin: 0;
+          color: white;
+        }
+
+        .separator{
+          padding: 3px;
+          background-color: #a6aaa9;
+        }
+
+        .hour{
+          padding-left: 15px;
+          font-style: italic;
+          font-size: small;
+        }
+
+        .error-title{
+          padding-left: 15px;
+          color: #590508;
+        }
+
+        .warning-title{
+          padding-left: 15px;
+          padding-top: 15px;
+          color: #a5742a;
+        }
+
+        .success-title{
+          padding-left: 15px;
+          padding-top: 15px;
+          color: #004114;
+        }
+
+        .content-table{
+          padding-left: 10px;
+          font-size: small;
+        }
+
+        .table-title{
+          font-weight: bold;
+          padding-bottom: 10px;
+        }
+
+        td{
+        padding-right: 10px;
+        padding-left: 10px;
+        }
+
+        tr:hover {background-color: #e9e7e9}
+
+        .method{
+        font-weight: bold;
+        }
+
 
   body
-    h1 Markup
+    h1 class="head-title"
+      p Index
 
-    h2 Errors
+    div class="separator"
 
-    table#errors
+    h3 class="hour" #{Time.new.strftime("%m-%d-%y %H:%M:%S").to_s}
+
+    h2 class="error-title"
+      p Errors
+
+    table#errors class="content-table"
      - for result in error
        tr
          td.result = result.result
          td.method = result.method
          td.url = result.uri
          td
-           a href="#{url}#{result.id}.html" "details"
+           a href="#{url}#{result.id}.html" details
 
-    h2 Warning
+    h2 class="warning-title"
+      p Warning
 
-    table#warning
+    table#warning class="content-table"
      - for result in warning
        tr
          td.result = result.result
@@ -28,9 +102,10 @@ html
          td
            a href="#{url}#{result.id}.html" "details"
 
-    h2 Success
+    h2 class="success-title"
+      p Success
 
-    table#success
+    table#success class="content-table"
      - for result in success
        tr
          td.result = result.result
