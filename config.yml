@@ -1,9 +1,18 @@
+docs:
+    - association/index.json
+    - event/index.json
+    - notification/index.json
+    - post/index.json
+    - report/index.json
+    - search/index.json
+    - user/index.json
 codes:
     warning:
         - 401
     error:
         - 200
         - 500
+        - 502
     success:
         - 400
         - 403
@@ -13,4 +22,3 @@ log_server:
     url: http://localhost:8123/
 tags:
     "insapptoken": "usertoken.rb"
-    #"userid": "userid.rb"

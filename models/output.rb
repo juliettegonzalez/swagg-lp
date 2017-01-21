@@ -15,9 +15,12 @@ class Output
 
     def initialize(method, uri, parameters, response)
         config = YAML.load_file('/var/SwaggLP/config.yml')
-        warning = config["codes"]["warning"]
-        error = config["codes"]["error"]
-        success = config["codes"]["success"]
+        warning = []
+        error = []
+        success = []
+        warning = config["codes"]["warning"] if config["codes"]["warning"]
+        error = config["codes"]["error"] if config["codes"]["error"]
+        success = config["codes"]["success"] if config["codes"]["success"]
         result = "Error"
         if response != :timeout then
             if error.include? response.code.to_i then
@@ -91,8 +94,8 @@ class Output
             "result" => self.result,
             "id" => self.id,
             "parameters" => self.parameters,
-            "code" => self.response.code,
-            "message" => self.response.message,
+            "code" => (self.response != :timeout ? self.response.code : "Timeout"),
+            "message" => (self.response != :timeout ? self.response.message : "Timeout"),
             "uri" => self.uri,
             "method" => self.method
         }

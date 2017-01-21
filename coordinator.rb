@@ -39,7 +39,8 @@ def treat_endpoint(endpoint, baseURL, models)
         begin
             res = http.request(request)
             result << Output.new(endpoint.method, url, [], res)
-        rescue
+        rescue e
+            puts e
             result << Output.new(endpoint.method, url, [], :timeout)
         end
     else
@@ -50,7 +51,8 @@ def treat_endpoint(endpoint, baseURL, models)
             begin
                 res = http.request(request)
                 result << Output.new(endpoint.method, url, params_to_send, res)
-            rescue
+            rescue e
+                puts e
                 result << Output.new(endpoint.method, url, [], :timeout)
             end
         end
@@ -60,7 +62,11 @@ end
 
 results = []
 puts "Running Fuzzy Test"
-for file in ['/tmp/user/index.json'] do #, '/tmp/association/index.json', '/tmp/event/index.json', '/tmp/post/index.json', '/tmp/report/index.json', '/tmp/search/index.json', '/tmp/notification/index.json'] do
+config = YAML.load_file('/var/SwaggLP/config.yml')
+docs = config["docs"]
+
+for file in docs do
+    file = "/tmp/#{file}"
     puts "Testing #{file}..."
     baseURL, endpoints, models = parse(file)
     progress = 0
@@ -74,17 +80,19 @@ for file in ['/tmp/user/index.json'] do #, '/tmp/association/index.json', '/tmp/
     }
 end
 
+exit_code = 0
 folder = Time.new.strftime("%y.%m.%d_%H-%M-%S").to_s
 `mkdir -p ./output/#{folder}`
 for result in results do
     File.open("./output/#{folder}/#{result.id}.html", 'w') { |file| file.write(generate_HTML_page(result)) }
+    exit_code = 1 if result.status == "error" && exit_code == 0
     puts result.sum_up(folder)
 end
 
-config = YAML.load_file('/var/SwaggLP/config.yml')
 url = config["log_server"]["url"]
 url = "#{url}/#{folder}/"
 File.open("./output/#{folder}/index.html", 'w') { |file| file.write(generate_HTML_index(results, url)) }
 
 File.open("./output/#{folder}/output.json", 'w') { |file| file.write(results.map { |e| e.to_h }.to_json) }
 puts "Finished Fuzzy Test"
+exit exit_code
