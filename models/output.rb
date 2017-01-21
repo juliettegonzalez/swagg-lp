@@ -23,14 +23,14 @@ class Output
         success = config["codes"]["success"] if config["codes"]["success"]
         result = "Error"
         if response != :timeout then
-            if error.include? response.code.to_i then
+            if error.include? response["code"].to_i then
                 result = "Error"
-            elsif warning.include? response.code.to_i then
+            elsif warning.include? response["code"].to_i then
                 result = "Warning"
-            elsif success.include? response.code.to_i then
+            elsif success.include? response["code"].to_i then
                 result = "Success"
             end
-            result += " [#{response.code}]"
+            result += " [#{response["code"]}]"
         else
             result = "Error"
             result += " [TIMEOUT]"
@@ -94,9 +94,12 @@ class Output
             "result" => self.result,
             "id" => self.id,
             "parameters" => self.parameters,
-            "code" => (self.response != :timeout ? self.response.code : "Timeout"),
-            "message" => (self.response != :timeout ? self.response.message : "Timeout"),
-            "body" => (self.response != :timeout ? self.response.body : "Timeout"),
+            #"code" => (self.response != :timeout ? self.response.code : "Timeout"),
+            #"message" => (self.response != :timeout ? self.response.message : "Timeout"),
+            #"body" => (self.response != :timeout ? self.response.body : "Timeout"),
+            "code" => self.response["code"],
+            "message" => "------",
+            "body" => self.response["body"],
             "uri" => self.uri,
             "method" => self.method
         }

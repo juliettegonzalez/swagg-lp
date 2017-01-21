@@ -37,20 +37,28 @@ def treat_endpoint(endpoint, baseURL, models)
     if limit == 0 then
         http, request = generate_request(endpoint.method, baseURL + url, nil)
         begin
-            res = http.request(request)
+            #res = http.request(request)
+            #puts "Sending request on #{baseURL+url} => #{res.body}"
+            res = excecute_request(endpoint.method, baseURL + url, {})
             result << Output.new(endpoint.method, url, [], res)
-        rescue
+        rescue => e
+            puts e
             result << Output.new(endpoint.method, url, [], :timeout)
         end
     else
         for i in 0...limit do
             params_to_send = params
             #paramsToSend = params.map { |e| e[i] } if params.length > 0
+            excecute_request(endpoint.method, baseURL + url, params_to_send)
             http, request = generate_request(endpoint.method, baseURL + url, params_to_send)
             begin
-                res = http.request(request)
+                #res = http.request(request)
+                #puts request
+                #puts "Sending request on #{baseURL+url} => #{res.body}"
+                res = excecute_request(endpoint.method, baseURL + url, {})
                 result << Output.new(endpoint.method, url, params_to_send, res)
-            rescue
+            rescue => e
+                puts e
                 result << Output.new(endpoint.method, url, [], :timeout)
             end
         end
@@ -91,6 +99,6 @@ url = config["log_server"]["url"]
 url = "#{url}/#{folder}/"
 File.open("./output/#{folder}/index.html", 'w') { |file| file.write(generate_HTML_index(results, url)) }
 
-File.open("./output/#{folder}/output.json", 'w') { |file| file.write(results.map { |e| e.to_h }.to_json) }
+File.open("./output/#{folder}/output.json", 'w') { |file| file.write(results.map { |e| e.to_h }.to_json.encode('UTF-8', :invalid => :replace)) }
 puts "Finished Fuzzy Test"
 exit exit_code

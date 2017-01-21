@@ -115,6 +115,5 @@ def generate_URL(endpoint)
         uri = "#{uri}&#{param.name}=#{value}" if uri.include? "?"
         uri = "#{uri}?#{param.name}=#{value}" if !uri.include? "?"
     end
-
     uri
 end
