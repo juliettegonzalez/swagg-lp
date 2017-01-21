@@ -13,12 +13,12 @@ require_relative '../models/response'
 require_relative '../models/model'
 require_relative '../models/property'
 
-def generateHTMLPage(output)
+def generate_HTML_page(output)
     template = Tilt.new('/var/SwaggLP/templates/output.slim')
     return template.render(output, output.to_h)
 end
 
-def generateHTMLIndex(outputs, url)
+def generate_HTML_index(outputs, url)
     template = Tilt.new('/var/SwaggLP/templates/index.slim')
     return template.render(outputs, {
         :error => outputs.select{ |o| o.result.include? "Error"},

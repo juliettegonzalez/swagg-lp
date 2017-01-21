@@ -9,11 +9,11 @@ class Response
         @code
     end
 
-    def responseType
+    def response_type
         @responseType
     end
 
-    def responseModel
+    def response_model
         @responseModel
     end
 

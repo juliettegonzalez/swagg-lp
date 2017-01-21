@@ -1,8 +1,8 @@
 class Parameter
     def initialize(name, paramType, dataType, required, description)
         @name = name
-        @paramType = paramType
-        @dataType = dataType
+        @param_type = paramType
+        @data_type = dataType
         @required = required
         @description = description
     end
@@ -11,12 +11,12 @@ class Parameter
         @name
     end
 
-    def paramType
-        @paramType
+    def param_type
+        @param_type
     end
 
-    def dataType
-        @dataType
+    def data_type
+        @data_type
     end
 
     def required
@@ -27,17 +27,16 @@ class Parameter
         @description
     end
 
-    def hasParamTag
+    def has_tag
         return @description != nil ? (@description.include? "#") : false
     end
 
-    #NB: we consider that there can be only one tag
-    def paramTag
-        return @description.split('#')[1].split(' ').first if self.hasParamTag
+    def tag
+        return @description.split('#')[1].split(' ').first if self.has_tag
         return nil
     end
 
     def to_s
-        "(#{paramType}) #{name} : #{dataType} #{required ? '(required)' : ''}"
+        "(#{param_type}) #{name} : #{data_type} #{required ? '(required)' : ''}"
     end
 end

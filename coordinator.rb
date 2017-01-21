@@ -17,16 +17,16 @@ require_relative 'generators/endpoints_generator'
 require_relative 'generators/parameter_generator'
 require_relative 'generators/output_generator'
 
-def treatEndpoint(endpoint, baseURL, models)
+def treat_endpoint(endpoint, baseURL, models)
     result = []
-    url = generateURL(endpoint)
+    url = generate_URL(endpoint)
     params = []
     endpoint.params.each do |param|
-        if param.paramType == "body" then
-          if param.hasParamTag then
-            params << generateFromTag(param.paramTag, number: 10)
+        if param.param_type == "body" then
+          if param.tag then
+            params << generate_from_tag(param.tag, number: 10)
           else
-            params << generateModel(models[param.dataType])
+            params << generate_model(models[param.data_type])
           end
         end
     end
@@ -35,7 +35,7 @@ def treatEndpoint(endpoint, baseURL, models)
     limit = params.map { |e| e.length }.min if params.length > 0
 
     if limit == 0 then
-        http, request = generateRequest(endpoint.method, baseURL + url, nil)
+        http, request = generate_request(endpoint.method, baseURL + url, nil)
         begin
             res = http.request(request)
             result << Output.new(endpoint.method, url, [], res)
@@ -44,12 +44,12 @@ def treatEndpoint(endpoint, baseURL, models)
         end
     else
         for i in 0...limit do
-            paramsToSend = params
+            params_to_send = params
             #paramsToSend = params.map { |e| e[i] } if params.length > 0
-            http, request = generateRequest(endpoint.method, baseURL + url, paramsToSend)
+            http, request = generate_request(endpoint.method, baseURL + url, params_to_send)
             begin
                 res = http.request(request)
-                result << Output.new(endpoint.method, url, paramsToSend, res)
+                result << Output.new(endpoint.method, url, params_to_send, res)
             rescue
                 result << Output.new(endpoint.method, url, [], :timeout)
             end
@@ -67,7 +67,7 @@ for file in ['/tmp/user/index.json'] do #, '/tmp/association/index.json', '/tmp/
     total = endpoints.length * 10
     endpoints.each { |endpoint|
         (1..10).each { |e|
-            results += treatEndpoint(endpoint, baseURL, models)
+            results += treat_endpoint(endpoint, baseURL, models)
             progress += 1
             puts "[Progress] #{((progress.to_f/total.to_f)*100).to_i} %"
         }
@@ -77,14 +77,14 @@ end
 folder = Time.new.strftime("%y.%m.%d_%H-%M-%S").to_s
 `mkdir -p ./output/#{folder}`
 for result in results do
-    File.open("./output/#{folder}/#{result.id}.html", 'w') { |file| file.write(generateHTMLPage(result)) }
+    File.open("./output/#{folder}/#{result.id}.html", 'w') { |file| file.write(generate_HTML_page(result)) }
     puts result.sum_up(folder)
 end
 
 config = YAML.load_file('/var/SwaggLP/config.yml')
 url = config["log_server"]["url"]
 url = "#{url}/#{folder}/"
-File.open("./output/#{folder}/index.html", 'w') { |file| file.write(generateHTMLIndex(results, url)) }
+File.open("./output/#{folder}/index.html", 'w') { |file| file.write(generate_HTML_index(results, url)) }
 
 File.open("./output/#{folder}/output.json", 'w') { |file| file.write(results.map { |e| e.to_h }.to_json) }
 puts "Finished Fuzzy Test"

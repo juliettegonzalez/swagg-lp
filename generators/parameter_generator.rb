@@ -13,63 +13,63 @@ require_relative '../models/property'
 
 TYPES = ['nil', 'int', 'float', 'string', 'bool', 'hex', 'array']
 
-def randomInt(min: 0, max: 2 << 32)
+def random_int(min: 0, max: 2 << 32)
     return Random.rand(min...max)
 end
 
-def randomFloat(min: 0, max: 2 << 32)
+def random_float(min: 0, max: 2 << 32)
   width = (min-max)
   return (rand*width)+max
 end
 
-def randomString(length: 1000)
+def random_string(length: 1000)
     return rand(36**length).to_s(36)
 end
 
-def randomArray(length: 10000)
+def random_array(length: 10000)
     result = Array.new(length, 0)
     return result.map { |e| yield }
 end
 
-def randomBool()
-    return randomInt(min: 0, max: 1) == 0
+def random_bool
+    return random_int(min: 0, max: 1) == 0
 end
 
-def randomHex()
+def random_hex
     BSON::ObjectId.new.to_s
 end
 
-def generateOtherType(types)
+def generate_other_types(types)
     type = TYPES - types
     type = type[Random.rand(0...type.length)]
-    return generateType(type)
+    return generate_type(type)
 end
 
-def generateType(type)
+def generate_type(type)
     return nil if type == 'nil'
-    return generateArray('string', length: 10) if type == 'array'
-    return randomInt if type == 'int'
-    return randomFloat if type == 'float'
-    return randomString(length: 10) if type == 'string'
-    return randomBool if type == 'bool'
-    return randomHex if type == 'gopkg.in.mgo.v2.bson.ObjectId' || type == "hex"
+    return generate_array('string', length: 10) if type == 'array'
+    return random_int if type == 'int'
+    return random_float if type == 'float'
+    return random_string(length: 10) if type == 'string'
+    return random_bool if type == 'bool'
+    return random_hex if type == 'gopkg.in.mgo.v2.bson.ObjectId' || type == "hex"
 end
 
-def generateArray(type, length: 10000)
-    return randomArray(length: length) { generateType(type) }
+def generate_array(type, length: 10000)
+    return random_array(length: length) { generate_type(type) }
 end
 
-def generateModel(model, number: 10)
+def generate_model(model, number: 10)
     if !model.properties || model.properties.length == 0 then
         types = TYPES - [model.id, 'nil', 'array', 'bool']
-        return generateOtherType(types)
+        return generate_other_types(types)
     end
     res = [0...number].map do |e|
         result = {}
         model.properties.each do |property|
             type = TYPES.clone - [property.type]
             type = type[Random.rand(0...type.length)]
-            value = generateType(type)
+            value = generate_type(type)
             result[property.name] = value if value
         end
         return result
@@ -77,7 +77,7 @@ def generateModel(model, number: 10)
     return res
 end
 
-def generateFromTag(tag, number: 1)
+def generate_from_tag(tag, number: 1)
     config = YAML.load_file('/var/SwaggLP/config.yml')
     return nil if !config["tags"].keys.include?(tag)
     script = config["tags"][tag]
@@ -85,34 +85,32 @@ def generateFromTag(tag, number: 1)
     return result.gsub("\n","")
 end
 
-def generateURL(endpoint)
+def generate_URL(endpoint)
     uri = endpoint.uri.clone
     params = uri.split("/").select do |e| /.*{(.*)}.*/.match(e) end
     params = params.map do |e| /.*{(.*)}.*/.match(e).captures.first end
-    endpointParams = {}
-    queryParams = {}
+    endpoint_params = {}
+    query_params = {}
     endpoint.params.each do |param|
-        endpointParams[param.name] = param if param.paramType == "path"
-        queryParams[param.name] = param if param.paramType == "query"
+        endpoint_params[param.name] = param if param.param_type == "path"
+        query_params[param.name] = param if param.param_type == "query"
     end
-    endpointParams.keys.each do |param|
-        param = endpointParams[param]
-        if param.paramTag
-            value = generateFromTag(param.paramTag)
+    endpoint_params.keys.each do |param|
+        param = endpoint_params[param]
+        if param.tag
+            value = generate_from_tag(param.tag)
         else
-            #value = generateOtherType([param.dataType, 'nil', 'bool', 'array']).to_s
-            value = generateOtherType(['nil', 'bool', 'array']).to_s
+            value = generate_other_types(['nil', 'bool', 'array']).to_s
         end
         uri.gsub!("\{#{param.name}\}", value)
     end
 
-    queryParams.keys.each do |param|
-        param = queryParams[param]
-        if param.paramTag
-            value = generateFromTag(param.paramTag)
+    query_params.keys.each do |param|
+        param = query_params[param]
+        if param.tag
+            value = generate_from_tag(param.tag)
         else
-            #value = generateOtherType([param.dataType, 'nil', 'bool', 'array']).to_s
-            value = generateOtherType(['nil', 'bool', 'array']).to_s
+            value = generate_other_type(['nil', 'bool', 'array']).to_s
         end
         uri = "#{uri}&#{param.name}=#{value}" if uri.include? "?"
         uri = "#{uri}?#{param.name}=#{value}" if !uri.include? "?"

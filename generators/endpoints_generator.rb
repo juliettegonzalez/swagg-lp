@@ -9,7 +9,7 @@ require_relative '../models/response'
 require_relative '../models/model'
 require_relative '../models/property'
 
-def generateRequest(method, url, parameters)
+def generate_request(method, url, parameters)
   uri = URI.parse(url)
   http = Net::HTTP.new(uri.host, uri.port)
   http.use_ssl = true
