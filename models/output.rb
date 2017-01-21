@@ -96,6 +96,7 @@ class Output
             "parameters" => self.parameters,
             "code" => (self.response != :timeout ? self.response.code : "Timeout"),
             "message" => (self.response != :timeout ? self.response.message : "Timeout"),
+            "body" => (self.response != :timeout ? self.response.body : "Timeout"),
             "uri" => self.uri,
             "method" => self.method
         }

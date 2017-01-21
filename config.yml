@@ -19,6 +19,6 @@ codes:
         - 404
         - 406
 log_server:
-    url: http://localhost:8123/
+    url: https://logs.thomasmorel.io/insapp-logs
 tags:
     "insapptoken": "usertoken.rb"

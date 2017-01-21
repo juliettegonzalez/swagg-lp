@@ -39,8 +39,7 @@ def treat_endpoint(endpoint, baseURL, models)
         begin
             res = http.request(request)
             result << Output.new(endpoint.method, url, [], res)
-        rescue e
-            puts e
+        rescue
             result << Output.new(endpoint.method, url, [], :timeout)
         end
     else
@@ -51,8 +50,7 @@ def treat_endpoint(endpoint, baseURL, models)
             begin
                 res = http.request(request)
                 result << Output.new(endpoint.method, url, params_to_send, res)
-            rescue e
-                puts e
+            rescue
                 result << Output.new(endpoint.method, url, [], :timeout)
             end
         end
